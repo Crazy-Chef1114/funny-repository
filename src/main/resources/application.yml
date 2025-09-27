@@ -1,0 +1,299 @@
+spring:
+  application:
+    name: convenient-office
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  webflux:
+    static-path-pattern: "/static/**"
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+server:
+  port: 8086
+  compression:
+    enabled: true
+
+openai:
+  api:
+    key: ${OPENAI_API_KEY:}
+    url: ${OPENAI_API_URL:https://api.openai.com/v1}
+    timeout: 30s
+
+app:
+  file:
+    upload:
+      max-size: 50MB
+      allowed-extensions: .xlsx, .xls
+    processing:
+      max-rows: 100000
+      max-columns: 100
+
+logging:
+  level:
+    com.xzz.independent: INFO
+    org.apache.poi: WARN
+
+
+#
+## 应用基础配置
+#spring:
+#  application:
+#    name: smart-table-analyzer
+#    version: 1.0.0
+## 国际化配置（未来多语言支持）
+#  messages:
+#    basename: i18n/messages
+#    encoding: UTF-8
+#    cache-duration: 3600
+## 性能优化配置
+#  jackson:
+#    serialization:
+#      indent-output: false  # 生产环境关闭美化输出
+##      indent-output: true  # 开发环境美化JSON输出
+#      write-dates-as-timestamps: false
+## Jackson JSON配置
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8
+#    deserialization:
+#      fail-on-unknown-properties: false  # 忽略未知属性
+#
+#  # 服务器配置
+#  servlet:
+#    multipart:
+#      max-file-size: 50MB
+#      max-request-size: 50MB
+#      enabled: true
+#      location: ${java.io.tmpdir}  # 临时文件存储位置
+#
+#  # Web配置
+#  web:
+#    resources:
+#      cache:
+#        period: 0  # 开发时禁用缓存，生产环境可设置缓存时间
+#      add-mappings: true
+#
+#  # MVC配置
+##  mvc:
+##    throw-exception-if-no-handler-found: true
+##    static-path-pattern: "/static/**"
+#
+#  # 文件上传配置
+#  webflux:
+#    static-path-pattern: "/static/**"
+#
+#  # 开发工具配置
+#  devtools:
+#    livereload:
+#      enabled: true
+#    restart:
+#      enabled: true
+#
+#  # 日志配置
+#  output:
+#    ansi:
+#      enabled: always  # 启用彩色日志
+#
+#  # 数据源配置（未来可能需要数据库）
+#  datasource:
+#    url: ${DATASOURCE_URL:jdbc:h2:mem:testdb}  # 默认使用H2内存数据库
+#    username: ${DATASOURCE_USERNAME:sa}
+#    password: ${DATASOURCE_PASSWORD:}
+#    driver-class-name: ${DATASOURCE_DRIVER:org.h2.Driver}
+#
+#  # JPA配置（未来扩展）
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.H2Dialect
+#        format_sql: true
+#
+## 服务器配置
+#server:
+#  port: ${SERVER_PORT:8086}
+#  servlet:
+#    context-path: /
+#    session:
+#      timeout: 30m
+#  compression:
+#    enabled: true
+#    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+#    min-response-size: 1024
+#  error:
+#    include-stacktrace: always  # 开发环境显示详细错误
+#    include-exception: true
+#    include-message: always
+#
+## OpenAI API配置
+#openai:
+#  api:
+#    key: ${OPENAI_API_KEY:sk-your-default-key-here}  # 从环境变量读取，避免硬编码
+#    url: ${OPENAI_API_URL:https://api.openai.com/v1}
+#    timeout:
+#      connection: 30s
+#      read: 60s
+#    max-retries: 3
+#    model: ${OPENAI_MODEL:gpt-3.5-turbo}  # 默认模型
+#
+## 应用自定义配置
+#app:
+#  # 文件处理配置
+#  file:
+#    upload:
+#      max-size: 50MB
+#      allowed-extensions: .xlsx, .xls  # 当前只支持Excel，未来可扩展
+#      temp-dir: ${java.io.tmpdir}/smart-table-uploads
+#      cleanup-cron: "0 0 2 * * ?"  # 每天凌晨2点清理临时文件
+#    processing:
+#      max-rows: 100000  # 最大处理行数限制
+#      max-columns: 100   # 最大列数限制
+#      chunk-size: 1000   # 分块处理大小
+#
+#  # AI服务配置
+#  ai:
+#    service:
+#      enabled: true
+#      cache:
+#        enabled: true
+#        ttl: 1h  # 缓存1小时
+#      rate-limit:
+#        requests-per-minute: 60  # 每分钟最大请求数
+#      prompt:
+#        default-temperature: 0.3
+#        max-tokens: 2000
+#
+#  # 安全配置（未来扩展）
+#  security:
+#    enabled: false  # 当前为自用工具，可关闭安全验证
+#    api-key: ${APP_API_KEY:}  # 未来可添加API密钥验证
+#    cors:
+#      allowed-origins: "http://localhost:3000,http://127.0.0.1:3000"
+#      allowed-methods: "GET,POST,PUT,DELETE,OPTIONS"
+#
+#  # 监控和健康检查
+#  management:
+#    endpoints:
+#      web:
+#        exposure:
+#          include: health,info,metrics
+#    endpoint:
+#      health:
+#        show-details: always
+#        show-components: always
+#    info:
+#      env:
+#        enabled: true
+#
+## 日志配置
+#logging:
+#  level:
+#    com.yourcompany.smarttable: DEBUG  # 应用包日志级别
+#    org.apache.poi: WARN               # POI日志级别
+#    org.springframework.web: DEBUG
+#    org.springframework.ai: DEBUG
+#    root: INFO
+#
+#  # 日志文件配置（生产环境）
+#  file:
+#    name: logs/smart-table-app.log
+#    max-size: 10MB
+#    max-history: 30
+#    total-size-cap: 1GB
+#
+#  # 日志格式
+#  pattern:
+#    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+#    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+#
+## 缓存配置（未来扩展）
+#cache:
+#  type: caffeine
+#  caffeine:
+#    spec: maximumSize=500,expireAfterWrite=1h
+#
+## 任务调度配置
+#task:
+#  scheduling:
+#    pool:
+#      size: 10
+#    thread-name-prefix: "scheduling-"
+#
+#  execution:
+#    pool:
+#      core-size: 20
+#      max-size: 50
+#      queue-capacity: 1000
+#    thread-name-prefix: "async-"
+#
+#
+#
+## 环境特定配置
+#---
+## 开发环境配置
+#spring:
+#  config:
+#    activate:
+#      on-profile: dev
+#
+#server:
+#  port: 8080
+#
+#logging:
+#  level:
+#    com.yourcompany.smarttable: DEBUG
+#    org.hibernate.SQL: DEBUG
+#
+#app:
+#  ai:
+#    service:
+#      mock-enabled: false  # 开发环境可启用Mock模式测试
+#
+#---
+## 测试环境配置
+#spring:
+#  config:
+#    activate:
+#      on-profile: test
+#
+#server:
+#  port: 8081
+#
+#openai:
+#  api:
+#    key: ${OPENAI_API_KEY_TEST:sk-test-key}
+#
+#logging:
+#  level:
+#    com.yourcompany.smarttable: INFO
+#
+#---
+## 生产环境配置
+#spring:
+#  config:
+#    activate:
+#      on-profile: prod
+#
+#server:
+#  port: ${SERVER_PORT:8080}
+#  error:
+#    include-stacktrace: never
+#    include-exception: false
+#
+#logging:
+#  level:
+#    com.yourcompany.smarttable: INFO
+#    root: WARN
+#
+#app:
+#  file:
+#    upload:
+#      max-size: 100MB  # 生产环境可调整更大
+#  ai:
+#    service:
+#      rate-limit:
+#        requests-per-minute: 30  # 生产环境限制更严格
